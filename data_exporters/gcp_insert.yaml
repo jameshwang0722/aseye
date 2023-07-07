@@ -1,0 +1,7 @@
+config:
+  bucket: aseye-raw-data
+  file_type: csv
+  object_key_path: Aseye
+  date_partition_format: "%Y%m%d"
+  google_application_credentials: Aseye/carbon-emission-first-test-b601f3645b20.json
+destination: google_cloud_storage

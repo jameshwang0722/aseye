@@ -1,0 +1,12 @@
+config:
+  columns: null
+  headers:
+    Content-Type: application/json
+  method: GET
+  payload: null
+  query:
+    api_key: "{{ mage_secret_var('EIA_API_KEY') }}"
+    year: 2023
+  response_parser: null
+  url: https://api.epa.gov/easey/streaming-services/facilities/attributes
+source: api

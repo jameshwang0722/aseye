@@ -1,0 +1,15 @@
+blocks: []
+callbacks: []
+conditionals: []
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: ingesting_emission_info
+spark_config: {}
+type: integration
+updated_at: '2023-07-07 16:55:47'
+uuid: ingesting_emission_info
+widgets: []
