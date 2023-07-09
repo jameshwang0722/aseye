@@ -3,49 +3,49 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - transform_emission
+  - combine_facility_emission_table
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extracting_from_gcp_emission
+  name: import_tbl_analytics
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: extracting_from_gcp_emission
+  uuid: import_tbl_analytics
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
-  - transform_emission
+  - create_co2prediction
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extracting_from_gcp_facility
-  retry_config: null
-  status: executed
-  type: data_loader
-  upstream_blocks: []
-  uuid: extracting_from_gcp_facility
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks:
-  - emission_bq_load
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: Transform_emission
+  name: combine_facility_emission_table
   retry_config: null
   status: executed
   type: transformer
   upstream_blocks:
-  - extracting_from_gcp_emission
-  - extracting_from_gcp_facility
-  uuid: transform_emission
+  - import_tbl_analytics
+  uuid: combine_facility_emission_table
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - co2prediction_bq_load
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: create_co2prediction
+  retry_config: null
+  status: executed
+  type: transformer
+  upstream_blocks:
+  - combine_facility_emission_table
+  uuid: create_co2prediction
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
@@ -54,13 +54,13 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: emission_bq_load
+  name: co2prediction_bq_load
   retry_config: null
   status: executed
   type: data_exporter
   upstream_blocks:
-  - transform_emission
-  uuid: emission_bq_load
+  - create_co2prediction
+  uuid: co2prediction_bq_load
 callbacks: []
 conditionals: []
 data_integration: null
@@ -69,9 +69,9 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: Creatiing tables for data warehouse
+name: prediction creator
 spark_config: {}
 type: python
-updated_at: '2023-07-09 04:16:49'
-uuid: creatiing_tables_for_data_warehouse
+updated_at: '2023-07-09 04:18:45'
+uuid: prediction_creator
 widgets: []
