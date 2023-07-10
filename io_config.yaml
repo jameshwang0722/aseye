@@ -28,7 +28,7 @@ default:
   DRUID_USER: user
   # Google
 
-  GOOGLE_SERVICE_ACC_KEY_FILEPATH: "Aseye/carbon-emission-first-test-b601f3645b20.json"
+  GOOGLE_SERVICE_ACC_KEY_FILEPATH: "Aseye/gcp_key.json"
   GOOGLE_LOCATION: US # Optional
   # MongoDB
   MONGODB_DATABASE: database
