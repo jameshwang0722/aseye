@@ -1,4 +1,18 @@
-blocks: []
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: yaml
+  name: eia_daily_data
+  retry_config: null
+  status: updated
+  type: data_loader
+  upstream_blocks: []
+  uuid: eia_daily_data
 callbacks: []
 conditionals: []
 data_integration: null
@@ -10,6 +24,6 @@ extensions: {}
 name: ingesting_emission_info
 spark_config: {}
 type: integration
-updated_at: '2023-07-07 16:55:47'
+updated_at: '2023-07-11 00:41:56'
 uuid: ingesting_emission_info
 widgets: []

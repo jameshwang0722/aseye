@@ -69,9 +69,9 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: Creatiing tables for data warehouse
+name: Creating tables for data warehouse
 spark_config: {}
 type: python
-updated_at: '2023-07-10 23:51:33'
-uuid: creatiing_tables_for_data_warehouse
+updated_at: '2023-07-11 01:34:35'
+uuid: creating_tables_for_data_warehouse
 widgets: []

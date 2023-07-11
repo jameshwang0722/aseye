@@ -1,3 +1,5 @@
+import pandas as pd
+
 if 'transformer' not in globals():
     from mage_ai.data_preparation.decorators import transformer
 if 'test' not in globals():
@@ -5,7 +7,7 @@ if 'test' not in globals():
 
 
 @transformer
-def transform(df, *args, **kwargs):
+def transform(training_data, *args, **kwargs):
     """
     Template code for a transformer block.
 
@@ -20,14 +22,14 @@ def transform(df, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     # Specify your transformation logic here
-    df_prediction = pd.dataframe()
-    unique_values = df['facility_id'].unique()
-    for facility in unique_values:
-        df_train = df[df['facility_id'] == facility]
-        df_train = df_train.sort_values(['datetime'])
+    training_data['datetime'] = pd.to_datetime(training_data['year_month'])
+    training_data.set_index('datetime', inplace=True)
+    training_data = training_data.drop('year_month', axis=1)
+    training_data['date'] = training_data.index
+    training_data = training_data.sort_values(['facilityName', 'datetime'])
 
 
-    return data
+    return training_data
 
 
 @test

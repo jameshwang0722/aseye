@@ -1,0 +1,4 @@
+mage_ai==0.8.104
+pandas==2.0.2
+pmdarima==2.0.3
+statsmodels==0.14.0

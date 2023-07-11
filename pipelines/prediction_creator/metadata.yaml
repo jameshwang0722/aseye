@@ -3,7 +3,7 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - combine_facility_emission_table
+  - clean_tbl_for_model
   executor_config: null
   executor_type: local_python
   has_callback: false
@@ -23,13 +23,13 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: combine_facility_emission_table
+  name: clean_tbl_for_model
   retry_config: null
   status: executed
   type: transformer
   upstream_blocks:
   - import_tbl_analytics
-  uuid: combine_facility_emission_table
+  uuid: clean_tbl_for_model
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
@@ -44,7 +44,7 @@ blocks:
   status: executed
   type: transformer
   upstream_blocks:
-  - combine_facility_emission_table
+  - clean_tbl_for_model
   uuid: create_co2prediction
 - all_upstream_blocks_executed: true
   color: null
@@ -72,6 +72,6 @@ extensions: {}
 name: prediction creator
 spark_config: {}
 type: python
-updated_at: '2023-07-09 04:18:45'
+updated_at: '2023-07-11 03:53:32'
 uuid: prediction_creator
 widgets: []

@@ -23,7 +23,6 @@ def load_data_from_big_query(*args, **kwargs):
     return BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).load(query)
 
 
-
 @test
 def test_output(output, *args) -> None:
     """
