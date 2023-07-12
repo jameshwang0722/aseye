@@ -72,6 +72,6 @@ extensions: {}
 name: prediction creator
 spark_config: {}
 type: python
-updated_at: '2023-07-11 03:53:32'
+updated_at: '2023-07-12 03:10:06'
 uuid: prediction_creator
 widgets: []
