@@ -1,5 +1,4 @@
 import pandas as pd
-
 if 'transformer' not in globals():
     from mage_ai.data_preparation.decorators import transformer
 if 'test' not in globals():
@@ -7,7 +6,7 @@ if 'test' not in globals():
 
 
 @transformer
-def transform(training_data, *args, **kwargs):
+def transform(df1, df2, df3, *args, **kwargs):
     """
     Template code for a transformer block.
 
@@ -22,12 +21,12 @@ def transform(training_data, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     # Specify your transformation logic here
-    training_data.set_index('datetime', inplace=True)
-    training_data['date'] = training_data.index
-    training_data = training_data.sort_values(['facilityId', 'datetime'])
+    data = pd.DataFrame()
+    
+    data = pd.concat([df1, df2, df3])
 
 
-    return training_data
+    return data
 
 
 @test

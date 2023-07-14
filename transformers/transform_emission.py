@@ -41,14 +41,13 @@ def transform(df, df2, *args, **kwargs):
     datetime_dim = datetime_dim[['datetime_id', 'datetime', 'day', 'week', 'month', 'year', 'weekday']]
 
     facility_dim = grouped_df[['facilityId', 'facilityName', 'stateCode']].drop_duplicates().reset_index(drop=True)
-    facility_dim['facility_id'] = facility_dim.index
-    facility_dim = facility_dim[['facility_id','facilityId', 'facilityName', 'stateCode']]
+    facility_dim = facility_dim[['facilityId', 'facilityName', 'stateCode']]
     facility_dim = pd.merge(facility_dim, df2[['facilityId', 'latitude', 'longitude']], how = 'left', on = 'facilityId')
     facility_dim = facility_dim.drop_duplicates().reset_index(drop=True)
 
     fact_table = grouped_df.merge(facility_dim, on = 'facilityId') \
              .merge(datetime_dim, on='datetime') \
-             [['production_id','facility_id', 'datetime_id', 'so2Mass', 'co2Mass', 'noxMass', 'heatInput']]
+             [['production_id','facilityId', 'datetime_id', 'so2Mass', 'co2Mass', 'noxMass', 'heatInput']]
     fact_table = fact_table.sort_values(by='production_id', ascending=True)
     fact_table = fact_table.reset_index()
 
@@ -56,6 +55,7 @@ def transform(df, df2, *args, **kwargs):
     return {"datetime_dim":datetime_dim.to_dict(orient="dict"),
     "facility_dim":facility_dim.to_dict(orient="dict"),
     "fact_table":fact_table.to_dict(orient="dict")}
+    
 @test
 def test_output(output, *args) -> None:
     """

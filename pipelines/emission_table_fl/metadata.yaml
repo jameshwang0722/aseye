@@ -3,49 +3,35 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - clean_tbl_for_model
+  - transform_emission
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: import_monthly_co2_training_data
+  name: extracting_from_gcp_facility
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: import_monthly_co2_training_data
+  uuid: extracting_from_gcp_facility
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
-  - create_co2prediction
+  - emission_bq_load
+  - daily_to_monthly_transformation
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: clean_tbl_for_model
+  name: Transform_emission
   retry_config: null
   status: executed
   type: transformer
   upstream_blocks:
-  - import_monthly_co2_training_data
-  uuid: clean_tbl_for_model
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks:
-  - co2prediction_bq_load
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: create_co2prediction
-  retry_config: null
-  status: executed
-  type: transformer
-  upstream_blocks:
-  - clean_tbl_for_model
-  uuid: create_co2prediction
+  - extracting_gcp_emission_fl
+  - extracting_from_gcp_facility
+  uuid: transform_emission
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
@@ -54,13 +40,47 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: co2prediction_bq_load
+  name: emission_bq_load
   retry_config: null
   status: executed
   type: data_exporter
   upstream_blocks:
-  - create_co2prediction
-  uuid: co2prediction_bq_load
+  - transform_emission
+  - daily_to_monthly_transformation
+  uuid: emission_bq_load
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_path: null
+  downstream_blocks:
+  - transform_emission
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: extracting_gcp_emission_FL
+  retry_config: null
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: extracting_gcp_emission_fl
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_path: null
+  downstream_blocks:
+  - emission_bq_load
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: daily_to_monthly_transformation
+  retry_config: null
+  status: executed
+  type: transformer
+  upstream_blocks:
+  - transform_emission
+  uuid: daily_to_monthly_transformation
 callbacks: []
 conditionals: []
 data_integration: null
@@ -69,9 +89,9 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: prediction creator
+name: emission_table_fl
 spark_config: {}
 type: python
-updated_at: '2023-07-14 22:59:10'
-uuid: prediction_creator
+updated_at: '2023-07-14 18:35:05'
+uuid: emission_table_fl
 widgets: []

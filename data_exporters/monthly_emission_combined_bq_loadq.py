@@ -9,24 +9,19 @@ if 'data_exporter' not in globals():
 
 
 @data_exporter
-def export_data_to_big_query(df, df2, **kwargs) -> None:
+def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
     """
     Template for exporting data to a BigQuery warehouse.
     Specify your configuration settings in 'io_config.yaml'.
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-
-    df['monthly_fact_table'] = df2
+    table_id = 'carbon-emission-first-test.emission_monthly_prediction.monthly_CO2_training_data'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
-    state = df['facility_dim']['stateCode']["3"]
 
-    for key, value in df.items():
-        table_id = 'carbon-emission-first-test.emission_daily_{}.{}'.format(state, key)
-
-        BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).export(
-            DataFrame(value),
-            table_id,
-            if_exists='replace',  # Specify resolution policy if table name already exists
-        )
+    BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).export(
+        df,
+        table_id,
+        if_exists='replace',  # Specify resolution policy if table name already exists
+    )

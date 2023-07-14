@@ -7,7 +7,6 @@ if 'data_loader' not in globals():
 if 'test' not in globals():
     from mage_ai.data_preparation.decorators import test
 
-
 @data_loader
 def load_data_from_big_query(*args, **kwargs):
     """
@@ -16,11 +15,12 @@ def load_data_from_big_query(*args, **kwargs):
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-    query = 'SELECT facilityName, year_month, co2_monthly_emission FROM carbon-emission-first-test.emission_daily_yt.monthly_emissions'
+    query = 'SELECT d.datetime, m.facilityId, m.co2Mass FROM carbon-emission-first-test.emission_daily_CA.monthly_fact_table m left join carbon-emission-first-test.emission_daily_CA.datetime_dim d on d.datetime_id = m.datetime_id'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
     return BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).load(query)
+
 
 
 @test

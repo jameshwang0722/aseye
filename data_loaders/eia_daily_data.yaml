@@ -7,7 +7,7 @@ config:
   query:
     api_key: "{{ mage_secret_var('EIA_API_KEY') }}"
     stateCode: AL
-    beginDate: 2020-01-01
+    beginDate: 2019-01-01
     endDate: 2022-12-31
   response_parser: null
   url: https://api.epa.gov/easey/streaming-services/emissions/apportioned/daily

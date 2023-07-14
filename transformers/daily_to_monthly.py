@@ -7,7 +7,7 @@ if 'test' not in globals():
 
 
 @transformer
-def transform(training_data, *args, **kwargs):
+def transform(df, *args, **kwargs):
     """
     Template code for a transformer block.
 
@@ -22,12 +22,22 @@ def transform(training_data, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     # Specify your transformation logic here
-    training_data.set_index('datetime', inplace=True)
-    training_data['date'] = training_data.index
-    training_data = training_data.sort_values(['facilityId', 'datetime'])
+
+    # Drop specific columns
+    columns_to_drop = ['index', 'production_id','datetime_id', 'datetime_id_1', 'day', 'week','weekday', 'month', 'year' ]
+    df = df.drop(columns_to_drop, axis=1)
+
+    # Set the day component of the date to the first day of the month
+    df['datetime'] = pd.to_datetime(df['datetime'])
+    df['Date'] = df['datetime'].dt.to_period('M').dt.to_timestamp()
+
+    # Group the data by month and facility, and sum the daily production
+    df_monthly = df.groupby([pd.Grouper(key='Date'), 'facilityId']).sum().reset_index()
 
 
-    return training_data
+
+
+    return df_monthly
 
 
 @test
