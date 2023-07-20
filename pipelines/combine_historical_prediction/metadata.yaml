@@ -3,52 +3,50 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - transform_emission
+  - combine_table_historical_prediction
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extracting_from_gcp_facility
+  name: extract_gcp_historical_analytics
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: extracting_from_gcp_facility
+  uuid: extract_gcp_historical_analytics
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
-  - emission_bq_load
-  - daily_to_monthly_transformation
+  - combine_table_historical_prediction
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: Transform_emission
+  name: extract_gcp_prediction_analytics
   retry_config: null
-  status: updated
-  type: transformer
-  upstream_blocks:
-  - extracting_gcp_emission_al
-  - extracting_from_gcp_facility
-  uuid: transform_emission
-- all_upstream_blocks_executed: false
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: extract_gcp_prediction_analytics
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
-  - emission_bq_load
+  - historical_pred_combine_bq_load
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: daily_to_monthly_transformation
+  name: combine_table_historical_prediction
   retry_config: null
   status: executed
   type: transformer
   upstream_blocks:
-  - transform_emission
-  uuid: daily_to_monthly_transformation
-- all_upstream_blocks_executed: false
+  - extract_gcp_historical_analytics
+  - extract_gcp_prediction_analytics
+  uuid: combine_table_historical_prediction
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -56,30 +54,13 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: emission_bq_load
+  name: historical_pred_combine_bq_load
   retry_config: null
   status: executed
   type: data_exporter
   upstream_blocks:
-  - transform_emission
-  - daily_to_monthly_transformation
-  uuid: emission_bq_load
-- all_upstream_blocks_executed: true
-  color: null
-  configuration:
-    file_path: null
-  downstream_blocks:
-  - transform_emission
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: extracting_gcp_emission_AL
-  retry_config: null
-  status: executed
-  type: data_loader
-  upstream_blocks: []
-  uuid: extracting_gcp_emission_al
+  - combine_table_historical_prediction
+  uuid: historical_pred_combine_bq_load
 callbacks: []
 conditionals: []
 data_integration: null
@@ -88,9 +69,9 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: emission_table_AL
+name: combine_historical_prediction
 spark_config: {}
 type: python
-updated_at: '2023-07-14 23:30:49'
-uuid: emission_table_al
+updated_at: '2023-07-18 21:43:46'
+uuid: combine_historical_prediction
 widgets: []
