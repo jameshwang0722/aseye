@@ -69,9 +69,12 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: combine_historical_prediction
+name: combine_historical_with_prediction
+notification_config: {}
+retry_config: {}
 spark_config: {}
+tags: []
 type: python
 updated_at: '2023-07-18 21:43:46'
-uuid: combine_historical_prediction
+uuid: combine_historical_with_prediction
 widgets: []

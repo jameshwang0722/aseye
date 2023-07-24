@@ -24,8 +24,8 @@ def sarimax_monthly(df, facility,ind):
     results=model.fit()
     df_prediction = pd.DataFrame(results.predict(start = len(df), end = len(df)+11, dynamic= True))
     df_prediction.rename(columns={'index': 'datetime', 'predicted_mean': 'predicted_CO2_emission'}, inplace=True)
-    df_prediction['facility'] = facility
-    parameter = {"facility": facility,'p': sarimax.order[0],'d': sarimax.order[1],'q': sarimax.order[2],'seasonal_P': sarimax.seasonal_order[0], 
+    df_prediction['facilityId'] = facility
+    parameter = {"facilityId": facility,'p': sarimax.order[0],'d': sarimax.order[1],'q': sarimax.order[2],'seasonal_P': sarimax.seasonal_order[0], 
     'seasonal_D': sarimax.seasonal_order[1], 'seasonal_Q': sarimax.seasonal_order[2], 'S': sarimax.seasonal_order[3]}
     df_parameter = pd.DataFrame(parameter, index=[ind])
     return df_prediction, df_parameter

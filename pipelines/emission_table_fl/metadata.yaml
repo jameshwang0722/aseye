@@ -90,8 +90,11 @@ executor_count: 1
 executor_type: null
 extensions: {}
 name: emission_table_fl
+notification_config: {}
+retry_config: {}
 spark_config: {}
+tags: []
 type: python
-updated_at: '2023-07-14 18:35:05'
+updated_at: '2023-07-24 18:05:24'
 uuid: emission_table_fl
 widgets: []

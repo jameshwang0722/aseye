@@ -31,7 +31,7 @@ def transform(data, *args, **kwargs):
 
 
 
-    columns_to_drop = ['index', 'production_id','datetime_id']
+    columns_to_drop = ['production_id','datetime_id']
     df = df.drop(columns_to_drop, axis=1)
 
     # Set the day component of the date to the first day of the month
@@ -48,6 +48,12 @@ def transform(data, *args, **kwargs):
     df_monthly = pd.merge(df_monthly, datetime_dim[['datetime_id', 'datetime']], how = 'left', on = 'datetime')
     columns_to_drop = ['Date', 'datetime']
     df_monthly = df_monthly.drop(columns_to_drop, axis=1)
+    
+    #sorting df then giving index
+    df_monthly = df_monthly.sort_values(by=['facilityId', 'datetime_id'])
+    df_monthly.reset_index(inplace=True)
+    df_monthly.rename(columns={'index': 'monthly_production_id'}, inplace=True)
+
 
 
 

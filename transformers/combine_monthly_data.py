@@ -24,6 +24,8 @@ def transform(df1, df2, df3, *args, **kwargs):
     data = pd.DataFrame()
     
     data = pd.concat([df1, df2, df3])
+    data.reset_index(inplace=True)
+    data.rename(columns={'index': 'trainingdata_id'}, inplace=True)
 
 
     return data

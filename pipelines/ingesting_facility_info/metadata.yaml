@@ -38,8 +38,11 @@ executor_count: 1
 executor_type: null
 extensions: {}
 name: Ingesting facility info
+notification_config: {}
+retry_config: {}
 spark_config: {}
+tags: []
 type: integration
-updated_at: '2023-07-07 17:05:26'
+updated_at: '2023-07-20 20:56:17'
 uuid: ingesting_facility_info
 widgets: []

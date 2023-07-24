@@ -41,7 +41,7 @@ blocks:
   language: python
   name: create_co2prediction
   retry_config: null
-  status: executed
+  status: updated
   type: transformer
   upstream_blocks:
   - clean_tbl_for_model
@@ -70,8 +70,11 @@ executor_count: 1
 executor_type: null
 extensions: {}
 name: prediction creator
+notification_config: {}
+retry_config: {}
 spark_config: {}
+tags: []
 type: python
-updated_at: '2023-07-14 22:59:10'
+updated_at: '2023-07-24 19:40:45'
 uuid: prediction_creator
 widgets: []

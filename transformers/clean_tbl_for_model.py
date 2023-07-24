@@ -22,6 +22,7 @@ def transform(training_data, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     # Specify your transformation logic here
+    training_data.drop(columns=['trainingdata_id'], inplace=True)
     training_data.set_index('datetime', inplace=True)
     training_data['date'] = training_data.index
     training_data = training_data.sort_values(['facilityId', 'datetime'])
