@@ -18,8 +18,8 @@ Aseye's goal is to create a software data platform that can be used to analyze c
 Dataset can be retrieved using the EPA API: https://www.epa.gov/ 
 
 ## Data Model
-<img src="images/data_model.jpeg">
-<img src="images/data_model_predictions.jpeg">
+<img src="images/data_model.jpg">
+<img src="images/data_model_predictions.jpg">
 
 ## Data Visualization
 The current dashboard can seen in the URL below:
