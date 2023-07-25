@@ -26,13 +26,13 @@ blocks:
   language: python
   name: Transform_emission
   retry_config: null
-  status: updated
+  status: executed
   type: transformer
   upstream_blocks:
   - extracting_gcp_emission_al
   - extracting_from_gcp_facility
   uuid: transform_emission
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
@@ -48,7 +48,7 @@ blocks:
   upstream_blocks:
   - transform_emission
   uuid: daily_to_monthly_transformation
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -94,6 +94,6 @@ retry_config: {}
 spark_config: {}
 tags: []
 type: python
-updated_at: '2023-07-24 23:58:26'
+updated_at: '2023-07-25 04:11:15'
 uuid: emission_table_al
 widgets: []

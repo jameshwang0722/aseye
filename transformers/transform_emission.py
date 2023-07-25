@@ -19,6 +19,7 @@ def filter_and_group_by_facility(df):
 
 def create_datetime_dim(grouped_df):
     datetime_dim = grouped_df[['datetime']].drop_duplicates().reset_index(drop=True)
+    datetime_dim = datetime_dim.sort_values(['datetime'])
     datetime_dim['day'] = datetime_dim['datetime'].dt.day
     datetime_dim['week'] = datetime_dim['datetime'].dt.isocalendar().week
     datetime_dim['month'] = datetime_dim['datetime'].dt.month
@@ -33,6 +34,7 @@ def create_facility_dim(grouped_df, facility_raw_data):
     facility_dim = facility_dim[['facilityId', 'facilityName', 'stateCode']]
     facility_dim = pd.merge(facility_dim, facility_raw_data[['facilityId', 'latitude', 'longitude']], how = 'left', on = 'facilityId')
     facility_dim = facility_dim.drop_duplicates().reset_index(drop=True)
+    facility_dim = facility_dim.sort_values(['facilityId'])
     return facility_dim
 
 def create_fact_table(grouped_df, datetime_dim, facility_dim):
@@ -75,14 +77,42 @@ def test_output(output, *args) -> None:
     """
     Template code for testing the output of the block.
     """
-    #test_emission_sample = pd.read_csv('Aseye/test_sample/daily-emissions-facility-sample.csv')
-    #test_facility_sample = pd.read_csv('Aseye/test_sample/facility_sample.csv')
+    test_emission_sample = pd.read_csv('Aseye/test_sample/daily-emissions-facility-sample.csv')
+    test_facility_sample = pd.read_csv('Aseye/test_sample/facility_sample.csv')
 
-    #test_filter_and_group_by_facility = filter_and_group_by_facility(test_emission_sample)
-    #test_create_datetime_dim = create_datetime_dim(test_filter_and_group_by_facility)
-    #test_create_facility_dim = create_facility_dim(test_filter_and_group_by_facility, test_facility_sample)
-    #test_create_fact_table = create_fact_table(test_filter_and_group_by_facility, test_create_datetime_dim, test_create_facility_dim)
+    test_filter_and_group_by_facility = filter_and_group_by_facility(test_emission_sample)
+    assert (
+        lambda test_filter_and_group_by_facility: test_filter_and_group_by_facility[(
+            test_filter_and_group_by_facility["facilityId"] == 3
+            ) & (
+                test_filter_and_group_by_facility["datetime"] == "2021-01-01"
+                )]["co2Mass"].values[0]
+                )(test_filter_and_group_by_facility) == 10290.9 , 'filter and group by facility function failed'
+    
+    test_create_datetime_dim = create_datetime_dim(test_filter_and_group_by_facility) 
+    assert (
+        lambda test_create_datetime_dim: test_create_datetime_dim[
+                test_create_datetime_dim["datetime_id"] == 0
+                ]["year"].values[0]
+                )(test_create_datetime_dim) == 2012, 'create datetime dim function failed'
 
 
+    test_create_facility_dim = create_facility_dim(test_filter_and_group_by_facility, test_facility_sample)
+    assert (
+        lambda test_create_facility_dim: test_create_facility_dim[
+                test_create_facility_dim["facilityId"] == 7
+                ]["facilityName"].values[0]
+                )(test_create_facility_dim) == 'Gadsden', 'create facility dim function failed'
+    
+    
+    test_create_fact_table = create_fact_table(test_filter_and_group_by_facility, test_create_datetime_dim, test_create_facility_dim)
+    assert (
+        lambda test_create_fact_table: test_create_fact_table[(
+            test_create_fact_table["facilityId"] == 3
+            ) & (
+                test_create_fact_table["datetime_id"] == 1
+                )]["co2Mass"].values[0]
+                )(test_create_fact_table) == 16757.2 , 'create fact table function failed'
 
-    #assert test_sample['CO2 Mass (short tons)'][0] ==19737.4, 'The output is cancer'
+
+    #assert test_filter_and_group_by_facility['CO2 Mass (short tons)'][0] ==19737.4, ''
