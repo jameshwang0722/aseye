@@ -6,11 +6,11 @@ Aseye's goal is to create a software data platform that can be used to analyze c
 
 ## Pipeline 
 <img src="images/flowchart.jpg">
-1. Retrieve emissions and facility data from EPA
-2. Store raw data in Google Cloud Storage 
-3. Extract raw data and transform it using Mage-AI
-4. Create prediction model using transformed data from step above
-5. Store data into Google BigQuery
+1. Retrieve emissions and facility data from EPA <br> 
+2. Store raw data in Google Cloud Storage <br> 
+3. Extract raw data and transform it using Mage-AI <br> 
+4. Create prediction model using transformed data from step above <br> 
+5. Store data into Google BigQuery <br> 
 6. Create data visualization using Google Looker Studio
 
 
@@ -22,9 +22,10 @@ Dataset can be retrieved using the EPA API: https://www.epa.gov/
 <img src="images/data_model_predictions.jpg">
 
 ## Data Visualization
-The current dashboard can seen in the URL below:
-https://lookerstudio.google.com/reporting/39033543-ec73-453f-8087-11cd2157d22f
-Note:
-Historical data: Jan 2012 - Dec 2021
-Prediction: Jan 2022 - Dec 2022
-Only added 3 states (AL, CA, FL) due to large dataset. Waiting for Mage increase capacity of extraction
+The current dashboard can seen in the URL below: <br> 
+https://lookerstudio.google.com/reporting/39033543-ec73-453f-8087-11cd2157d22f <br> 
+<br> 
+Note: <br> 
+- Historical data: Jan 2012 - Dec 2021 <br> 
+- Prediction: Jan 2022 - Dec 2022 <br> 
+- Only added 3 states (AL, CA, FL) due to large dataset. Waiting for Mage increase capacity of extraction
