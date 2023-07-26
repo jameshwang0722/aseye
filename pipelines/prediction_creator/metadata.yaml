@@ -46,7 +46,7 @@ blocks:
   upstream_blocks:
   - clean_tbl_for_model
   uuid: create_co2prediction
-- all_upstream_blocks_executed: true
+- all_upstream_blocks_executed: false
   color: null
   configuration: {}
   downstream_blocks: []
@@ -75,6 +75,6 @@ retry_config: {}
 spark_config: {}
 tags: []
 type: python
-updated_at: '2023-07-24 19:40:45'
+updated_at: '2023-07-26 00:38:22'
 uuid: prediction_creator
 widgets: []

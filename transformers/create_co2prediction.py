@@ -54,7 +54,7 @@ def transform(df, *args, **kwargs):
 
     for facility, data in grouped_data:
         print("facility:", facility)
-        if len(data)>48:
+        if len(data)>80:
             data_sorted = data.sort_values(['date'])
             training_data = pd.DataFrame(data_sorted[['date', 'co2Mass']])
             training_data.set_index('date', inplace=True)

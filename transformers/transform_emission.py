@@ -114,5 +114,3 @@ def test_output(output, *args) -> None:
                 )]["co2Mass"].values[0]
                 )(test_create_fact_table) == 16757.2 , 'create fact table function failed'
 
-
-    #assert test_filter_and_group_by_facility['CO2 Mass (short tons)'][0] ==19737.4, ''
