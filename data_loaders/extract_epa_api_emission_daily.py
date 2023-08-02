@@ -31,6 +31,7 @@ def date_finder():
     current_date = datetime.now()
 
     begin_date = current_date - relativedelta(months=2)
+    begin_date = begin_date.replace(day=1)
     begin_date_str = begin_date.strftime('%Y-%m-%d')
 
     _, last_day = calendar.monthrange(begin_date.year, begin_date.month)

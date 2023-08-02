@@ -3,17 +3,17 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - emission_daily_each_month_storage_load
+  - facility_yearly_storage_load
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extract_epa_api_emission_daily
+  name: extract_epa_api_facilities
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: extract_epa_api_emission_daily
+  uuid: extract_epa_api_facilities
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
@@ -22,13 +22,13 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: emission_daily_each_month_storage_load
+  name: facility_yearly_storage_load
   retry_config: null
   status: executed
   type: data_exporter
   upstream_blocks:
-  - extract_epa_api_emission_daily
-  uuid: emission_daily_each_month_storage_load
+  - extract_epa_api_facilities
+  uuid: facility_yearly_storage_load
 callbacks: []
 concurrency_config: {}
 conditionals: []
@@ -38,12 +38,12 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: Extracting_API_daily_each_month_load_storage
+name: extracting_api_facility_yearly_load_storage
 notification_config: {}
 retry_config: {}
 spark_config: {}
 tags: []
 type: python
-updated_at: '2023-08-02 04:14:50'
-uuid: extracting_api_daily_each_month_load_storage
+updated_at: '2023-08-02 04:15:04'
+uuid: extracting_api_facility_yearly_load_storage
 widgets: []
