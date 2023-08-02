@@ -14,7 +14,7 @@ blocks:
   type: data_loader
   upstream_blocks: []
   uuid: extracting_from_gcp_facility
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
@@ -32,7 +32,7 @@ blocks:
   - extracting_gcp_emission_fl
   - extracting_from_gcp_facility
   uuid: transform_emission
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks: []
@@ -64,7 +64,7 @@ blocks:
   type: data_loader
   upstream_blocks: []
   uuid: extracting_gcp_emission_fl
-- all_upstream_blocks_executed: false
+- all_upstream_blocks_executed: true
   color: null
   configuration:
     file_path: null
@@ -82,6 +82,7 @@ blocks:
   - transform_emission
   uuid: daily_to_monthly_transformation
 callbacks: []
+concurrency_config: {}
 conditionals: []
 data_integration: null
 description: null
@@ -93,7 +94,9 @@ name: emission_table_fl
 notification_config: {}
 retry_config: {}
 spark_config: {}
-tags: []
+tags:
+- test
+- data modelling
 type: python
 updated_at: '2023-07-26 00:30:51'
 uuid: emission_table_fl

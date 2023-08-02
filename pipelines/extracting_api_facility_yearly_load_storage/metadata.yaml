@@ -42,7 +42,8 @@ name: extracting_api_facility_yearly_load_storage
 notification_config: {}
 retry_config: {}
 spark_config: {}
-tags: []
+tags:
+- automation
 type: python
 updated_at: '2023-08-02 04:15:04'
 uuid: extracting_api_facility_yearly_load_storage

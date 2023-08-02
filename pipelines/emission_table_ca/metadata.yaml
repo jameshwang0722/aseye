@@ -81,6 +81,7 @@ blocks:
   - transform_emission
   uuid: daily_to_monthly_transformation
 callbacks: []
+concurrency_config: {}
 conditionals: []
 data_integration: null
 description: null
@@ -92,7 +93,9 @@ name: emission_table_CA
 notification_config: {}
 retry_config: {}
 spark_config: {}
-tags: []
+tags:
+- data modelling
+- test
 type: python
 updated_at: '2023-07-26 00:31:59'
 uuid: emission_table_ca

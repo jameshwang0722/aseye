@@ -30,6 +30,7 @@ blocks:
   - ingesting_facility_information
   uuid: configure_destination_to_gcp
 callbacks: []
+concurrency_config: {}
 conditionals: []
 data_integration: null
 description: null
@@ -41,7 +42,9 @@ name: Ingesting facility info
 notification_config: {}
 retry_config: {}
 spark_config: {}
-tags: []
+tags:
+- test
+- ingestion
 type: integration
 updated_at: '2023-07-20 20:56:17'
 uuid: ingesting_facility_info

@@ -81,6 +81,7 @@ blocks:
   upstream_blocks: []
   uuid: extracting_gcp_emission_al
 callbacks: []
+concurrency_config: {}
 conditionals: []
 data_integration: null
 description: null
@@ -92,7 +93,9 @@ name: emission_table_AL
 notification_config: {}
 retry_config: {}
 spark_config: {}
-tags: []
+tags:
+- data modelling
+- test
 type: python
 updated_at: '2023-07-26 00:29:49'
 uuid: emission_table_al
