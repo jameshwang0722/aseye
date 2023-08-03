@@ -3,48 +3,49 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - al_co_storage_load
+  - historical_storage_load
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: AL-CO Historical extraction
+  name: nc_nm_historical_extraction
   retry_config: null
-  status: executed
+  status: updated
   type: data_loader
   upstream_blocks: []
-  uuid: al_co_historical_extraction
-- all_upstream_blocks_executed: true
+  uuid: nc_nm_historical_extraction
+- all_upstream_blocks_executed: false
   color: null
-  configuration: {}
+  configuration:
+    file_path: null
   downstream_blocks: []
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: al-co_storage_load
+  name: historical_storage_load
   retry_config: null
   status: executed
   type: data_exporter
   upstream_blocks:
-  - al_co_historical_extraction
-  uuid: al_co_storage_load
+  - nc_nm_historical_extraction
+  uuid: historical_storage_load
 callbacks: []
 concurrency_config: {}
 conditionals: []
 data_integration: null
-description: AL-CO Historical ingestion
+description: ''
 executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: AL-CO Historical Ingestion
+name: nc_nm_historical_ingestion
 notification_config: {}
 retry_config: {}
 spark_config: {}
 tags:
 - one-time ingestion
 type: python
-updated_at: '2023-08-03 00:21:39'
-uuid: al_co_historical_ingestion
+updated_at: '2023-08-03 06:21:00'
+uuid: nc_nm_historical_ingestion
 widgets: []

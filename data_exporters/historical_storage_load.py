@@ -19,8 +19,11 @@ def export_data_to_google_cloud_storage(df: DataFrame, **kwargs) -> None:
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
+    unique_values = sorted(df['stateCode'].unique())
+
+
     bucket_name = 'aseye-raw-data'
-    object_key = 'Aseye/Raw_Data_Emissions/Historical/AL-CO 2014-2023May.parquet'
+    object_key = 'Aseye/Raw_Data_Emissions/Historical/{}-{} 2014-2023May.parquet'.format(unique_values[0],unique_values[len(unique_values)-1])
     formatt = 'Parquet'
 
     GoogleCloudStorage.with_config(ConfigFileLoader(config_path, config_profile)).export(
