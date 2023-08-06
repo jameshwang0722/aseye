@@ -44,6 +44,7 @@ retry_config: {}
 spark_config: {}
 tags:
 - one-time ingestion
+- test
 type: python
 updated_at: '2023-08-03 05:31:06'
 uuid: ak_co_historical_ingestion

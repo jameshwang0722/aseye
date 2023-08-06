@@ -3,66 +3,49 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - transform_emission
+  - clean_tbl_for_model
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extracting_gcp_emission_all
+  name: import_monthly_co2_training_data
   retry_config: null
   status: updated
   type: data_loader
   upstream_blocks: []
-  uuid: extracting_gcp_emission_all
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks:
-  - transform_emission
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: extracting_from_gcp_facility_2023
-  retry_config: null
-  status: executed
-  type: data_loader
-  upstream_blocks: []
-  uuid: extracting_from_gcp_facility_2023
+  uuid: import_monthly_co2_training_data
 - all_upstream_blocks_executed: false
   color: null
   configuration: {}
   downstream_blocks:
-  - daily_to_monthly_transformation
-  - all_emission_bq_load
+  - test_co2predctioin
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: Transform_emission
+  name: clean_tbl_for_model
   retry_config: null
   status: executed
   type: transformer
   upstream_blocks:
-  - extracting_gcp_emission_all
-  - extracting_from_gcp_facility_2023
-  uuid: transform_emission
+  - import_monthly_co2_training_data
+  uuid: clean_tbl_for_model
 - all_upstream_blocks_executed: false
   color: null
   configuration: {}
   downstream_blocks:
-  - all_emission_bq_load
+  - co2prediction_bq_load
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: daily_to_monthly_transformation
+  name: test_co2predctioin
   retry_config: null
-  status: executed
+  status: updated
   type: transformer
   upstream_blocks:
-  - transform_emission
-  uuid: daily_to_monthly_transformation
+  - clean_tbl_for_model
+  uuid: test_co2predctioin
 - all_upstream_blocks_executed: false
   color: null
   configuration: {}
@@ -71,14 +54,13 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: all_emission_bq_load
+  name: co2prediction_bq_load
   retry_config: null
-  status: updated
+  status: executed
   type: data_exporter
   upstream_blocks:
-  - transform_emission
-  - daily_to_monthly_transformation
-  uuid: all_emission_bq_load
+  - test_co2predctioin
+  uuid: co2prediction_bq_load
 callbacks: []
 concurrency_config: {}
 conditionals: []
@@ -88,13 +70,12 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: emission_table_all
+name: prediction_creator_copy
 notification_config: {}
 retry_config: {}
 spark_config: {}
-tags:
-- one-time ingestion
+tags: []
 type: python
-updated_at: '2023-08-06 06:19:03'
-uuid: emission_table_all
+updated_at: '2023-08-06 06:24:08'
+uuid: prediction_creator_copy
 widgets: []

@@ -22,7 +22,7 @@ def export_data_to_big_query(df, df2, **kwargs) -> None:
     config_profile = 'default'
 
     for key, value in df.items():
-        table_id = 'carbon-emission-first-test.emission_daily.{}'.format( key)
+        table_id = 'carbon-emission-first-test.emission_daily'
 
         BigQuery.with_config(ConfigFileLoader(config_path, config_profile)).export(
             DataFrame(value),

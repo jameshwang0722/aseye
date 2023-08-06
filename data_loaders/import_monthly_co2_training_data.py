@@ -16,7 +16,7 @@ def load_data_from_big_query(*args, **kwargs):
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-    query = 'SELECT * FROM carbon-emission-first-test.emission_monthly_prediction.monthly_CO2_training_data'
+    query = 'SELECT * FROM carbon-emission-first-test.emission_daily.monthly_emissions'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
