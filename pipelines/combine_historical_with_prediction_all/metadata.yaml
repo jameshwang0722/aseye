@@ -3,65 +3,49 @@ blocks:
   color: null
   configuration: {}
   downstream_blocks:
-  - combine_monthly_data
+  - combine_table_historical_prediction
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extract_gcp_monthlyco2_al
+  name: extract_gcp_historical_analytics
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: extract_gcp_monthlyco2_al
+  uuid: extract_gcp_historical_analytics
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
-  - combine_monthly_data
+  - combine_table_historical_prediction
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extract_gcp_monthlyco2_ca
+  name: extract_gcp_prediction_analytics
   retry_config: null
   status: executed
   type: data_loader
   upstream_blocks: []
-  uuid: extract_gcp_monthlyco2_ca
+  uuid: extract_gcp_prediction_analytics
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
   downstream_blocks:
-  - combine_monthly_data
+  - historical_pred_combine_bq_load
   executor_config: null
   executor_type: local_python
   has_callback: false
   language: python
-  name: extract_gcp_monthlyco2_FL
-  retry_config: null
-  status: executed
-  type: data_loader
-  upstream_blocks: []
-  uuid: extract_gcp_monthlyco2_fl
-- all_upstream_blocks_executed: true
-  color: null
-  configuration: {}
-  downstream_blocks:
-  - monthly_emission_combined_bq_loadq
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: combine monthly data
+  name: combine_table_historical_prediction
   retry_config: null
   status: executed
   type: transformer
   upstream_blocks:
-  - extract_gcp_monthlyco2_fl
-  - extract_gcp_monthlyco2_al
-  - extract_gcp_monthlyco2_ca
-  uuid: combine_monthly_data
+  - extract_gcp_historical_analytics
+  - extract_gcp_prediction_analytics
+  uuid: combine_table_historical_prediction
 - all_upstream_blocks_executed: true
   color: null
   configuration: {}
@@ -70,13 +54,28 @@ blocks:
   executor_type: local_python
   has_callback: false
   language: python
-  name: monthly_emission_combined_bq_loadq
+  name: historical_pred_combine_bq_load
   retry_config: null
   status: executed
   type: data_exporter
   upstream_blocks:
-  - combine_monthly_data
-  uuid: monthly_emission_combined_bq_loadq
+  - combine_table_historical_prediction
+  uuid: historical_pred_combine_bq_load
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_path: null
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: import_monthly_co2_training_data
+  retry_config: null
+  status: not_executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: import_monthly_co2_training_data
 callbacks: []
 concurrency_config: {}
 conditionals: []
@@ -86,14 +85,13 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: combining_monthly_CO2_data
+name: combine_historical_with_prediction_all
 notification_config: {}
 retry_config: {}
 spark_config: {}
 tags:
-- data modelling
-- test
+- one-time ingestion
 type: python
-updated_at: '2023-07-26 04:30:21'
-uuid: combining_monthly_co2_data
+updated_at: '2023-08-06 22:51:21'
+uuid: combine_historical_with_prediction_all
 widgets: []

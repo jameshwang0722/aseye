@@ -28,7 +28,7 @@ retry_config: {}
 spark_config: {}
 tags:
 - test
-- data modelling
+- ingestion
 type: integration
 updated_at: '2023-07-12 03:21:31'
 uuid: ingesting_emission_info

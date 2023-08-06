@@ -70,12 +70,13 @@ executor_config: {}
 executor_count: 1
 executor_type: null
 extensions: {}
-name: prediction_creator_copy
+name: prediction_creator_for_historical
 notification_config: {}
 retry_config: {}
 spark_config: {}
-tags: []
+tags:
+- one-time ingestion
 type: python
-updated_at: '2023-08-06 06:26:10'
-uuid: prediction_creator_copy
+updated_at: '2023-08-06 23:26:13'
+uuid: prediction_creator_for_historical
 widgets: []
