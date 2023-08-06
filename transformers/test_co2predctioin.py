@@ -57,7 +57,7 @@ def transform(df, *args, **kwargs):
     for data in grouped_data:
         facility = data['facilityId'][0]
         print("facility:", facility)
-        if len(data)>80 and int(data['date'][len(data)-1][:4]) == 2021:
+        if len(data)>80 and int(data['date'][len(data)-1][:4]) == 2023:
             data_sorted = data.sort_values(['date'])
             training_data = pd.DataFrame(data_sorted[['date', 'co2Mass']])
             training_data.set_index('date', inplace=True)

@@ -76,6 +76,6 @@ retry_config: {}
 spark_config: {}
 tags: []
 type: python
-updated_at: '2023-08-06 06:24:08'
+updated_at: '2023-08-06 06:26:10'
 uuid: prediction_creator_copy
 widgets: []
