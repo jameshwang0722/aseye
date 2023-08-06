@@ -17,6 +17,18 @@ def filter_and_group_by_facility(df):
     grouped_df = grouped_df.drop(['date'], axis=1)
     return grouped_df
 
+def find_operation_duration(df):
+    start_year = pd.DataFrame(df.groupby('facilityId')['datetime'].min().dt.year)
+    end_year= pd.DataFrame(df.groupby('facilityId')['datetime'].max().dt.year)
+
+    start_year.rename(columns={'datetime': 'startYear'}, inplace=True)
+    end_year.rename(columns={'datetime': 'endYear'}, inplace=True)
+
+    start_year = start_year.reset_index()
+    end_year = end_year.reset_index()
+
+    return start_year, end_year
+
 def create_datetime_dim(grouped_df):
     datetime_dim = grouped_df[['datetime']].drop_duplicates().reset_index(drop=True)
     datetime_dim = datetime_dim.sort_values(['datetime'])
@@ -29,10 +41,12 @@ def create_datetime_dim(grouped_df):
     datetime_dim = datetime_dim[['datetime_id', 'datetime', 'day', 'week', 'month', 'year', 'weekday']]
     return datetime_dim
 
-def create_facility_dim(grouped_df, facility_raw_data):
+def create_facility_dim(grouped_df, facility_raw_data, start_year, end_year):
     facility_dim = grouped_df[['facilityId', 'facilityName', 'stateCode']].drop_duplicates().reset_index(drop=True)
     facility_dim = facility_dim[['facilityId', 'facilityName', 'stateCode']]
     facility_dim = pd.merge(facility_dim, facility_raw_data[['facilityId', 'latitude', 'longitude']], how = 'left', on = 'facilityId')
+    facility_dim = pd.merge(facility_dim, start_year, how = 'left', on = 'facilityId')
+    facility_dim = pd.merge(facility_dim, end_year, how = 'left', on = 'facilityId')
     facility_dim = facility_dim.drop_duplicates().reset_index(drop=True)
     facility_dim = facility_dim.sort_values(['facilityId'])
     return facility_dim
@@ -63,8 +77,9 @@ def transform(emission_raw_data, facility_raw_data, *args, **kwargs):
     """
     # Specify your transformation logic here
     grouped_df = filter_and_group_by_facility(emission_raw_data)
+    start_year, end_year = find_operation_duration(grouped_df)
     datetime_dim = create_datetime_dim(grouped_df)
-    facility_dim = create_facility_dim(grouped_df, facility_raw_data)
+    facility_dim = create_facility_dim(grouped_df, facility_raw_data, start_year, end_year)
     fact_table = create_fact_table(grouped_df, datetime_dim, facility_dim)
 
 
@@ -89,6 +104,20 @@ def test_output(output, *args) -> None:
                 )]["co2Mass"].values[0]
                 )(test_filter_and_group_by_facility) == 10290.9 , 'filter and group by facility function failed'
     
+
+    test_start_year, test_end_year = find_operation_duration(test_filter_and_group_by_facility)
+    assert (
+        lambda test_start_year: test_start_year[test_start_year["facilityId"] == 8]
+            ["startYear"].values[0]
+            )(test_start_year) == 2012, 'start_year Failed'
+        
+    assert (
+        lambda test_end_year: test_end_year[
+            test_end_year["facilityId"] == 8]
+            ["endYear"].values[0]
+            )(test_end_year) == 2019, 'end_year Failed'
+
+
     test_create_datetime_dim = create_datetime_dim(test_filter_and_group_by_facility) 
     assert (
         lambda test_create_datetime_dim: test_create_datetime_dim[
@@ -97,12 +126,22 @@ def test_output(output, *args) -> None:
                 )(test_create_datetime_dim) == 2012, 'create datetime dim function failed'
 
 
-    test_create_facility_dim = create_facility_dim(test_filter_and_group_by_facility, test_facility_sample)
+    test_create_facility_dim = create_facility_dim(test_filter_and_group_by_facility, test_facility_sample, test_start_year, test_end_year)
     assert (
         lambda test_create_facility_dim: test_create_facility_dim[
                 test_create_facility_dim["facilityId"] == 7
                 ]["facilityName"].values[0]
                 )(test_create_facility_dim) == 'Gadsden', 'create facility dim function failed'
+    assert (
+        lambda test_create_facility_dim: test_create_facility_dim[
+                test_create_facility_dim["facilityId"] == 8
+                ]["startYear"].values[0]
+                )(test_create_facility_dim) == 2012, ' facility dim startyear function failed'
+    assert (
+        lambda test_create_facility_dim: test_create_facility_dim[
+                test_create_facility_dim["facilityId"] == 8
+                ]["endYear"].values[0]
+                )(test_create_facility_dim) == 2019, ' facility dim endyear function failed'                
     
     
     test_create_fact_table = create_fact_table(test_filter_and_group_by_facility, test_create_datetime_dim, test_create_facility_dim)
