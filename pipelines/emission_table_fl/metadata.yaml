@@ -16,6 +16,22 @@ blocks:
   uuid: extracting_from_gcp_facility
 - all_upstream_blocks_executed: true
   color: null
+  configuration:
+    file_path: null
+  downstream_blocks:
+  - transform_emission
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: extracting_gcp_emission_FL
+  retry_config: null
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: extracting_gcp_emission_fl
+- all_upstream_blocks_executed: true
+  color: null
   configuration: {}
   downstream_blocks:
   - emission_bq_load
@@ -34,38 +50,6 @@ blocks:
   uuid: transform_emission
 - all_upstream_blocks_executed: true
   color: null
-  configuration: {}
-  downstream_blocks: []
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: emission_bq_load
-  retry_config: null
-  status: executed
-  type: data_exporter
-  upstream_blocks:
-  - transform_emission
-  - daily_to_monthly_transformation
-  uuid: emission_bq_load
-- all_upstream_blocks_executed: true
-  color: null
-  configuration:
-    file_path: null
-  downstream_blocks:
-  - transform_emission
-  executor_config: null
-  executor_type: local_python
-  has_callback: false
-  language: python
-  name: extracting_gcp_emission_FL
-  retry_config: null
-  status: executed
-  type: data_loader
-  upstream_blocks: []
-  uuid: extracting_gcp_emission_fl
-- all_upstream_blocks_executed: true
-  color: null
   configuration:
     file_path: null
   downstream_blocks:
@@ -81,6 +65,22 @@ blocks:
   upstream_blocks:
   - transform_emission
   uuid: daily_to_monthly_transformation
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: emission_bq_load
+  retry_config: null
+  status: executed
+  type: data_exporter
+  upstream_blocks:
+  - transform_emission
+  - daily_to_monthly_transformation
+  uuid: emission_bq_load
 callbacks: []
 concurrency_config: {}
 conditionals: []
@@ -98,6 +98,6 @@ tags:
 - test
 - data modelling
 type: python
-updated_at: '2023-07-26 00:30:51'
+updated_at: '2023-08-08 17:55:35'
 uuid: emission_table_fl
 widgets: []

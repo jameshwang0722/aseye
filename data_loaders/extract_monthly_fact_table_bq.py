@@ -1,4 +1,4 @@
-from mage_ai.data_preparation.repo_manager import get_repo_path
+from mage_ai.settings.repo import get_repo_path
 from mage_ai.io.bigquery import BigQuery
 from mage_ai.io.config import ConfigFileLoader
 from os import path
@@ -16,7 +16,7 @@ def load_data_from_big_query(*args, **kwargs):
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-    query = 'SELECT * FROM carbon-emission-first-test.emission_monthly_prediction.monthly_CO2_training_data'
+    query = 'SELECT d.datetime, m.facilityId, m.co2Mass FROM carbon-emission-first-test.emission_daily.monthly_fact_table m left join carbon-emission-first-test.emission_daily.datetime_dim d on d.datetime_id = m.datetime_id'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 
