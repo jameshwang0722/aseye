@@ -1,0 +1,154 @@
+blocks:
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - appending_datetime_dim
+  - appending_daily_fact_table
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: extract_daily_emission_cloud_storage
+  retry_config: null
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: extract_daily_emission_cloud_storage
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - appending_datetime_dim
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: extract_datetime_dim_bq
+  retry_config: null
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: extract_datetime_dim_bq
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - appending_daily_fact_table
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: extract_fact_table_bq
+  retry_config: null
+  status: executed
+  type: data_loader
+  upstream_blocks: []
+  uuid: extract_fact_table_bq
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - appending_daily_fact_table
+  - combine_datetime_dim_and_fact_table_to_dict
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: appending datetime_dim
+  retry_config: null
+  status: executed
+  type: transformer
+  upstream_blocks:
+  - extract_daily_emission_cloud_storage
+  - extract_datetime_dim_bq
+  uuid: appending_datetime_dim
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - combine_datetime_dim_and_fact_table_to_dict
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: appending_daily_fact_table
+  retry_config: null
+  status: executed
+  type: transformer
+  upstream_blocks:
+  - appending_datetime_dim
+  - extract_fact_table_bq
+  - extract_daily_emission_cloud_storage
+  uuid: appending_daily_fact_table
+- all_upstream_blocks_executed: true
+  color: null
+  configuration:
+    file_path: null
+  downstream_blocks:
+  - all_emission_bq_load
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: daily_to_monthly_transformation
+  retry_config: null
+  status: failed
+  type: transformer
+  upstream_blocks:
+  - combine_datetime_dim_and_fact_table_to_dict
+  uuid: daily_to_monthly_transformation
+- all_upstream_blocks_executed: true
+  color: null
+  configuration: {}
+  downstream_blocks:
+  - daily_to_monthly_transformation
+  - all_emission_bq_load
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: combine_datetime_dim_and_fact_table_to_dict
+  retry_config: null
+  status: executed
+  type: transformer
+  upstream_blocks:
+  - appending_daily_fact_table
+  - appending_datetime_dim
+  uuid: combine_datetime_dim_and_fact_table_to_dict
+- all_upstream_blocks_executed: false
+  color: null
+  configuration:
+    file_path: null
+  downstream_blocks: []
+  executor_config: null
+  executor_type: local_python
+  has_callback: false
+  language: python
+  name: all_emission_bq_load
+  retry_config: null
+  status: not_executed
+  type: data_exporter
+  upstream_blocks:
+  - combine_datetime_dim_and_fact_table_to_dict
+  - daily_to_monthly_transformation
+  uuid: all_emission_bq_load
+callbacks: []
+concurrency_config: {}
+conditionals: []
+data_integration: null
+description: null
+executor_config: {}
+executor_count: 1
+executor_type: null
+extensions: {}
+name: appending_daily_emission_data
+notification_config: {}
+retry_config: {}
+spark_config: {}
+tags:
+- automation
+type: python
+updated_at: '2023-08-22 03:46:55'
+uuid: appending_daily_emission_data
+widgets: []

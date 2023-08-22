@@ -16,7 +16,7 @@ def export_data_to_big_query(df: DataFrame, **kwargs) -> None:
 
     Docs: https://docs.mage.ai/design/data-loading#bigquery
     """
-    table_id = 'carbon-emission-first-test.emission_monthly_prediction.combined_historical_prediction'
+    table_id = 'carbon-emission-first-test.emission_monthly_prediction.combined_training_and_predicted_CO2_emission'
     config_path = path.join(get_repo_path(), 'io_config.yaml')
     config_profile = 'default'
 

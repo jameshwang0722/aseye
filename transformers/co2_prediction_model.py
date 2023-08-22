@@ -37,7 +37,8 @@ def sarimax_monthly(df, facility,ind):
     model=sm.tsa.statespace.SARIMAX(df['co2Mass'],order=sarimax.order,seasonal_order=sarimax.seasonal_order)
     results=model.fit()
     df_prediction = pd.DataFrame(results.predict(start = len(df), end = len(df)+11, dynamic= True))
-    df_prediction.rename(columns={'index': 'datetime', 'predicted_mean': 'predicted_CO2_emission'}, inplace=True)
+    df_prediction['datetime'] = df_prediction.index
+    df_prediction.rename(columns={'index': 'datetime', 'predicted_mean': 'co2Mass'}, inplace=True)
     df_prediction['facilityId'] = facility
     parameter = {"facilityId": facility,'p': sarimax.order[0],'d': sarimax.order[1],'q': sarimax.order[2],'seasonal_P': sarimax.seasonal_order[0], 
     'seasonal_D': sarimax.seasonal_order[1], 'seasonal_Q': sarimax.seasonal_order[2], 'S': sarimax.seasonal_order[3]}
@@ -46,18 +47,16 @@ def sarimax_monthly(df, facility,ind):
 
 @transformer
 def transform(df, *args, **kwargs):
-
     prediction_df = pd.DataFrame()
     facility_predicted_log_df = pd.DataFrame()
     prediction_parameter_df = pd.DataFrame()
     index=0
-
     grouped_data = df.groupby('facilityId')
     grouped_data = [group.reset_index(drop=True) for _, group in grouped_data]
     for data in grouped_data:
         facility = data['facilityId'][0]
         print("facility:", facility)
-        if len(data)>80 and int(data['date'][len(data)-1][:4]) == 2023:
+        if len(data)>80 and int(data['date'][len(data)-1][:4]) == 2023 and data.tail(12)['co2Mass'].sum()>0:
             data_sorted = data.sort_values(['date'])
             training_data = pd.DataFrame(data_sorted[['date', 'co2Mass']])
             training_data.set_index('date', inplace=True)
@@ -68,17 +67,23 @@ def transform(df, *args, **kwargs):
                 index +=1
             log = {
                 'facilityId': [facility],
-                'Predicted?': ['Yes']
+                'predicted_facility': [True]
             }
         else:
-            facility_predicted_log_df = pd.concat([facility_predicted_log_df, data])
             log = {
                 'facilityId': [facility],
-                'Predicted?': ['No']
+                'predicted_facility': [False]
             }
         log_df = pd.DataFrame(log)
         facility_predicted_log_df = pd.concat([facility_predicted_log_df, log_df])
+
+        
+    prediction_df.index.names = ['id']        
     prediction_df.reset_index(inplace=True)
+    facility_predicted_log_df.reset_index(inplace=True)
+    facility_predicted_log_df = facility_predicted_log_df.drop('index', axis=1)
+    prediction_df = prediction_df[['id', 'datetime', 'facilityId', 'co2Mass']]
+
 
     return {"predicted_CO2_emission": prediction_df.to_dict(orient="dict"),
     "facility_prediction_checker": facility_predicted_log_df.to_dict(orient="dict"), 

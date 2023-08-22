@@ -22,7 +22,7 @@ def transform(data, *args, **kwargs):
     # Specify your transformation logic here
     data = data.sort_values(['facilityId', 'datetime'])
     data.reset_index(inplace=True)
-    data.rename(columns={'index': 'trainingdata_id'}, inplace=True)
+    data.rename(columns={'index': 'id'}, inplace=True)
 
 
     return data

@@ -1,5 +1,3 @@
-import pandas as pd
-
 if 'transformer' not in globals():
     from mage_ai.data_preparation.decorators import transformer
 if 'test' not in globals():
@@ -7,7 +5,7 @@ if 'test' not in globals():
 
 
 @transformer
-def transform(training_data, *args, **kwargs):
+def transform(fact_table, datetime_dim, *args, **kwargs):
     """
     Template code for a transformer block.
 
@@ -22,14 +20,9 @@ def transform(training_data, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     # Specify your transformation logic here
-    training_data.drop(columns=['id'], inplace=True)
-    training_data.set_index('datetime', inplace=True)
-    training_data['date'] = training_data.index
-    training_data = training_data.sort_values(['facilityId', 'datetime'])
-    
+    return {"datetime_dim":datetime_dim.to_dict(orient="dict"),
+    "fact_table":fact_table.to_dict(orient="dict")}
 
-
-    return training_data
 
 
 @test

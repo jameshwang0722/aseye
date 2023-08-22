@@ -21,11 +21,14 @@ def transform(df1, df2, *args, **kwargs):
         Anything (e.g. data frame, dictionary, array, int, str, etc.)
     """
     # Specify your transformation logic here
-    df1['prediction'] = False
-    df2['prediction'] = True
+    df1['prediction_value'] = False
+    df2['prediction_value'] = True
     df2.rename(columns = {'index':'datetime', 'predicted_CO2_emission': 'co2Mass'}, inplace = True)
 
     data = pd.concat([df1, df2])
+    data.index.names = ['data_id']
+    data.reset_index(inplace=True)
+
 
     return data
 
